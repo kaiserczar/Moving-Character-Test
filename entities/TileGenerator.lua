@@ -41,7 +41,7 @@ function TileGenerator:generateNewGrassTile(width, height, numBlades--[[, colorB
 	width = width or self.tileBaseSize
 	height = height or self.tileBaseSize
 	numBlades = numBlades or math.random(3,10)
-	colorBase = colorBase or {r=102,g=165,b=39}
+	colorBase = colorBase or {r=85,g=137,b=33}--{r=102,g=165,b=39}
 	
 	tileImgData = love.image.newImageData(width,height)
 	

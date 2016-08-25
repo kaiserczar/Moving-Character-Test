@@ -1,7 +1,8 @@
 BodyPart = class('BodyPart')
 
-function BodyPart:initialize(image,x,y,angle,scaleX,scaleY,centerX,centerY)
+function BodyPart:initialize(name,image,x,y,angle,scaleX,scaleY,centerX,centerY)
 	
+	self.name = name
 	self.img = image
 	self.x = x
 	self.y = y

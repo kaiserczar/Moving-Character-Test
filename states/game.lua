@@ -5,10 +5,10 @@ game = {}
 
 function game:enter()
 	assetFolder = 'assets/img/'
-    self.mainCharacter = Character:new(assetFolder..'helmet.png',assetFolder..'rightArm.png',assetFolder..'leftArm.png',assetFolder..'sword.png',assetFolder..'shield.png',love.graphics.getWidth()/2,love.graphics.getHeight()/2,0,350,0.5)
+    self.mainCharacter = Character:new(assetFolder..'helmet.png',assetFolder..'rightArm.png',assetFolder..'leftArm.png',assetFolder..'sword.png',assetFolder..'shield.png',assetFolder..'legs1.png',assetFolder..'legs2.png',love.graphics.getWidth()/2,love.graphics.getHeight()/2,0,350,0.5)
 	
 	self.tileGen = TileGenerator:new()
-	self.tileGen:generateNewGrassTile(100,100,math.random(30,50))
+	self.tileGen:generateNewGrassTile(100,100,math.random(300,500))
 end
 
 function game:update(dt)
@@ -26,7 +26,7 @@ end
 
 function game:keypressed(key, code)
 	if key == 'r' then
-		self.tileGen:generateNewGrassTile(100,100,math.random(30,50))
+		self.tileGen:generateNewGrassTile(100,100,math.random(300,500))
 	end
 end
 
