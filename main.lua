@@ -15,6 +15,8 @@ require 'states.options'
 -- entities
 require 'entities.sound'
 require 'entities.character'
+require 'entities.bodyPart'
+require 'entities.TileGenerator'
 
 -- ui
 require 'lib.ui.button'
@@ -73,7 +75,7 @@ function love.load()
         options:save(options:getDefaultConfig())
     end
 
-	cursorImg = love.graphics.newImage('assets/shieldCursor.png')
+	cursorImg = love.graphics.newImage('assets/img/circleCursor.png')
 	love.mouse.setVisible(false)
 	
     options:load()
