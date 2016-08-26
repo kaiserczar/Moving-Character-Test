@@ -42,17 +42,17 @@ local function _updateCharacterMovement(self,dt)
 			self.y = self.y + self.speed*dt
 		end
 	end
-	if self.x < 0 then self.x = love.graphics.getWidth() end
-	if self.x > love.graphics.getWidth() then self.x = 0 end
-	if self.y < 0 then self.y = love.graphics.getHeight() end
-	if self.y > love.graphics.getHeight() then self.y = 0 end
+	if self.x < self.width/2 then self.x = self.width/2 end
+	if self.x > game.playingField.width - self.width/2 then self.x = game.playingField.width - self.width/2 end
+	if self.y < self.height/2 then self.y = self.height/2 end
+	if self.y > game.playingField.height - self.height/2 then self.x = game.playingField.height - self.height/2 end
 
 end
 
 local function _updateCharacterAngle(self)
 
-	mouseX = love.mouse.getX()
-	mouseY = love.mouse.getY()
+	mouseX = love.mouse.getX() + game.playingField.screenX
+	mouseY = love.mouse.getY() + game.playingField.screenY
 	self.angle = math.atan((mouseY - self.y)/(mouseX - self.x))
 	if mouseX < self.x then
 		self.angle = self.angle + math.pi
@@ -148,13 +148,15 @@ function Character:initialize(imgHead,imgRArm,imgLArm,imgWeapon,imgOffhand,imgLe
 	self.angle = angle or 0
 	self.speed = speed or 400
 	self.size = sizeRatio or 1
+	self.width = Head.img:getWidth()*self.size
+	self.height = Head.img:getHeight()*self.size
 	
 	print('DrawComponents is '..tostring(#self.bodyParts)..' items large.')
 	
 	self.inAttackAnimation = false
 	self.attackAnimation = {}
 	
-	self.canvas = love.graphics.newCanvas(150, 150)
+	self.canvas = love.graphics.newCanvas(self.width/self.size, self.height/self.size)
 end
 
 function Character:update(dt)
@@ -177,34 +179,35 @@ end
 
 function Character:draw()
 	
-	self.canvas:renderTo(function()
-		love.graphics.clear()
-	
-		-- Draw legs here so they're below everything.
-		if self.isAnimatingLegs then
-			if self.currentLegAnimationImg == 2 or self.currentLegAnimationImg == 4 then
-				self.animatedLegs1.scaleY = 0.8
-				self.animatedLegs1:draw()
-			elseif self.currentLegAnimationImg == 3 then
-				self.animatedLegs1.scaleY = 1
-				self.animatedLegs1:draw()
-			elseif self.currentLegAnimationImg == 6 or self.currentLegAnimationImg == 8 then
-				self.animatedLegs2.scaleY = 0.8
-				self.animatedLegs2:draw()
-			elseif self.currentLegAnimationImg == 7 then
-				self.animatedLegs2.scaleY = 1
-				self.animatedLegs2:draw()
-			end
-		end
+	if game.playingField:onScreen(self.x,self.y) then
+		self.canvas:renderTo(function()
+			love.graphics.clear()
 		
-		-- Draw always visible body parts here.
-		for i,bodyPart in ipairs(self.bodyParts) do
-			bodyPart:draw()
-		end
-	
-	end)
-	
-    love.graphics.setColor(255, 255, 255)
-    love.graphics.draw(self.canvas, self.x, self.y, self.angle + math.pi/2, self.size, self.size,self.canvas:getWidth()/2,self.canvas:getHeight()/2)
-	
+			-- Draw legs here so they're below everything.
+			if self.isAnimatingLegs then
+				if self.currentLegAnimationImg == 2 or self.currentLegAnimationImg == 4 then
+					self.animatedLegs1.scaleY = 0.8
+					self.animatedLegs1:draw()
+				elseif self.currentLegAnimationImg == 3 then
+					self.animatedLegs1.scaleY = 1
+					self.animatedLegs1:draw()
+				elseif self.currentLegAnimationImg == 6 or self.currentLegAnimationImg == 8 then
+					self.animatedLegs2.scaleY = 0.8
+					self.animatedLegs2:draw()
+				elseif self.currentLegAnimationImg == 7 then
+					self.animatedLegs2.scaleY = 1
+					self.animatedLegs2:draw()
+				end
+			end
+			
+			-- Draw always visible body parts here.
+			for i,bodyPart in ipairs(self.bodyParts) do
+				bodyPart:draw()
+			end
+		
+		end)
+		
+		love.graphics.setColor(255, 255, 255)
+		love.graphics.draw(self.canvas, self.x - game.playingField.screenX, self.y - game.playingField.screenY, self.angle + math.pi/2, self.size, self.size,self.canvas:getWidth()/2,self.canvas:getHeight()/2)
+	end
 end

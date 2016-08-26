@@ -17,6 +17,7 @@ require 'entities.sound'
 require 'entities.character'
 require 'entities.bodyPart'
 require 'entities.TileGenerator'
+require 'entities.playField'
 
 -- ui
 require 'lib.ui.button'

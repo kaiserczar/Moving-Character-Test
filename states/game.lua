@@ -5,14 +5,15 @@ game = {}
 
 function game:enter()
 	assetFolder = 'assets/img/'
-    self.mainCharacter = Character:new(assetFolder..'helmet.png',assetFolder..'rightArm.png',assetFolder..'leftArm.png',assetFolder..'sword.png',assetFolder..'shield.png',assetFolder..'legs1.png',assetFolder..'legs2.png',love.graphics.getWidth()/2,love.graphics.getHeight()/2,0,350,0.5)
+    self.mainCharacter = Character:new(assetFolder..'helmet.png',assetFolder..'rightArm.png',assetFolder..'leftArm.png',assetFolder..'sword.png',assetFolder..'shield.png',assetFolder..'legs1.png',assetFolder..'legs2.png',love.graphics.getWidth()/2,love.graphics.getHeight()/2,0,300,0.5)
 	
-	self.tileGen = TileGenerator:new()
-	self.tileGen:generateNewGrassTile(100,100,math.random(300,500))
+	self.playingField = PlayField:new()
 end
 
 function game:update(dt)
 	self.mainCharacter:update(dt)
+	
+	self.playingField:update(dt)
 	
 	if DEBUG then
 		debugTimer = debugTimer + dt
@@ -25,8 +26,8 @@ function game:update(dt)
 end
 
 function game:keypressed(key, code)
-	if key == 'r' then
-		self.tileGen:generateNewGrassTile(100,100,math.random(300,500))
+	if key == 'r' and DEBUG then
+		self.playingField.tileGen:generateNewGrassTile(100,100,math.random(300,500))
 	end
 end
 
@@ -36,12 +37,7 @@ end
 
 function game:draw()
 	-- Draw background.
-	tileSize = self.tileGen.grassTile:getWidth()
-	for x = 0,love.graphics.getWidth()-1,self.tileGen.grassTile:getWidth() do
-		for y = 0, love.graphics.getHeight()-1, self.tileGen.grassTile:getHeight() do
-			love.graphics.draw(self.tileGen.grassTile,x,y)
-		end
-	end
+	self.playingField:draw()
 	
 	self.mainCharacter:draw()
 	
