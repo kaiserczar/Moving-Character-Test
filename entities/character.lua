@@ -3,6 +3,13 @@ Character = class('Character')
 local function _updateCharacterMovement(self,dt)
 	self.isMoving = false
 	angledVelocity = self.speed / math.sqrt(2)
+	straightVelocity = self.speed
+	
+	if self.isSprinting then
+		angledVelocity = angledVelocity * self.sprintingModifier
+		straightVelocity = straightVelocity * self.sprintingModifier
+	end
+	
 	if love.keyboard.isDown('left','a') and not love.keyboard.isDown('right','d') then
 		self.isMoving = true
 		if love.keyboard.isDown('up','w') and not love.keyboard.isDown('down','s') then
@@ -15,7 +22,7 @@ local function _updateCharacterMovement(self,dt)
 			self.y = self.y + angledVelocity*dt
 		else
 			-- Going left.
-			self.x = self.x - self.speed*dt
+			self.x = self.x - straightVelocity*dt
 		end
 	elseif love.keyboard.isDown('right','d') and not love.keyboard.isDown('left','a') then
 		self.isMoving = true
@@ -29,17 +36,17 @@ local function _updateCharacterMovement(self,dt)
 			self.y = self.y + angledVelocity*dt
 		else
 			-- Going right.
-			self.x = self.x + self.speed*dt
+			self.x = self.x + straightVelocity*dt
 		end
 	else
 		if love.keyboard.isDown('up','w') and not love.keyboard.isDown('down','s') then
 			-- Going up.
 			self.isMoving = true
-			self.y = self.y - self.speed*dt
+			self.y = self.y - straightVelocity*dt
 		elseif love.keyboard.isDown('down','s') and not love.keyboard.isDown('up','w') then
 			-- Going down.
 			self.isMoving = true
-			self.y = self.y + self.speed*dt
+			self.y = self.y + straightVelocity*dt
 		end
 	end
 	if self.x < self.width/2 then self.x = self.width/2 end
@@ -150,6 +157,8 @@ function Character:initialize(imgHead,imgRArm,imgLArm,imgWeapon,imgOffhand,imgLe
 	self.size = sizeRatio or 1
 	self.width = Head.img:getWidth()*self.size
 	self.height = Head.img:getHeight()*self.size
+	self.isSprinting = false
+	self.sprintingModifier = 1.75
 	
 	print('DrawComponents is '..tostring(#self.bodyParts)..' items large.')
 	
@@ -179,7 +188,7 @@ end
 
 function Character:draw()
 	
-	if game.playingField:onScreen(self.x,self.y) then
+	if game.playingField:onScreenArea(self.x-self.width/2,self.y-self.height/2,self.width,self.height) then
 		self.canvas:renderTo(function()
 			love.graphics.clear()
 		

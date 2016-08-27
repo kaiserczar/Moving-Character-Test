@@ -32,8 +32,8 @@ end
 
 function PlayField:initialize(width, height)
 
-	self.width = width or 5000
-	self.height = height or 5000
+	self.width = width or 4000
+	self.height = height or 4000
 
 	self.screenX = 0
 	self.screenY = 0
@@ -95,7 +95,10 @@ function PlayField:draw()
 		end
 	end
 	
-	if DEBUG then love.graphics.print('Corner: ('..tostring(self.screenX)..','..tostring(self.screenY)..')',0,0) end
+	if DEBUG then
+		love.graphics.print('Corner: ('..tostring(self.screenX)..','..tostring(self.screenY)..')',0,0)
+		love.graphics.print('Mouse:  ('..tostring(love.mouse.getX()+self.screenX)..','..tostring(love.mouse.getY()+self.screenY)..')',0,30)
+	end
 end
 
 function PlayField:centerAt(centerX, centerY)
@@ -118,8 +121,14 @@ function PlayField:centerAt(centerX, centerY)
 	end
 end
 
-function PlayField:onScreen(x,y)
+function PlayField:onScreenPixel(x,y)
 
 	return x > self.screenX and x < self.screenX + love.graphics.getWidth() and y > self.screenY and y < self.screenY + love.graphics.getHeight()
+
+end
+
+function PlayField:onScreenArea(x,y,width,height)
+
+	return x+width > self.screenX and x < self.screenX + love.graphics.getWidth() and y+height > self.screenY and y < self.screenY + love.graphics.getHeight()
 
 end

@@ -5,7 +5,10 @@ game = {}
 
 function game:enter()
 	assetFolder = 'assets/img/'
-    self.mainCharacter = Character:new(assetFolder..'helmet.png',assetFolder..'rightArm.png',assetFolder..'leftArm.png',assetFolder..'sword.png',assetFolder..'shield.png',assetFolder..'legs1.png',assetFolder..'legs2.png',love.graphics.getWidth()/2,love.graphics.getHeight()/2,0,300,0.5)
+    self.mainCharacter = Character:new(assetFolder..'helmet.png',assetFolder..'rightArm.png',assetFolder..'leftArm.png',assetFolder..'sword.png',assetFolder..'shield.png',assetFolder..'legs1.png',assetFolder..'legs2.png',100,100,0,300,0.5)
+	
+	love.mouse.setX(love.graphics.getWidth()/2)
+	love.mouse.setY(love.graphics.getHeight()/2)
 	
 	self.playingField = PlayField:new()
 end
@@ -28,6 +31,16 @@ end
 function game:keypressed(key, code)
 	if key == 'r' and DEBUG then
 		self.playingField.tileGen:generateNewGrassTile(100,100,math.random(300,500))
+	end
+	
+	if key == 'lshift' then
+		self.mainCharacter.isSprinting = true
+	end
+end
+
+function game:keyreleased(key, code)
+	if key == 'lshift' then
+		self.mainCharacter.isSprinting = false
 	end
 end
 
