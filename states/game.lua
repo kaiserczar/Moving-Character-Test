@@ -10,7 +10,7 @@ function game:enter()
 	love.mouse.setX(love.graphics.getWidth()/2)
 	love.mouse.setY(love.graphics.getHeight()/2)
 	
-	self.playingField = PlayField:new()
+	self.playingField = PlayField:new(4000,4000,1576,800,0,0)
 end
 
 function game:update(dt)
@@ -52,7 +52,7 @@ function game:draw()
 	-- Draw background.
 	self.playingField:draw()
 	
-	self.mainCharacter:draw()
+	--self.mainCharacter:draw() Draw on the map instead.
 	
 	love.graphics.draw(cursorImg,love.mouse.getX(),love.mouse.getY(),0,1,1,cursorImg:getWidth()/2,cursorImg:getHeight()/2)
 	
