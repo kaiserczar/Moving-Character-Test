@@ -4,17 +4,19 @@ local function _scrollScreen(self,dt)
 
 	mouseX = love.mouse.getX()
 	mouseY = love.mouse.getY()
-	
-	if mouseX < self.screenScrollLeftLoc then
-		self.screenX = self.screenX - dt * self.screenScrollSpeed * (self.screenScrollLeftLoc - mouseX) / self.screenScrollLeftLoc
-	elseif mouseX > self.screenScrollRightLoc then
-		self.screenX = self.screenX + dt * self.screenScrollSpeed * (mouseX - self.screenScrollRightLoc) / (self.viewWidth - self.screenScrollRightLoc)
-	end
-	
-	if mouseY < self.screenScrollUpLoc then
-		self.screenY = self.screenY - dt * self.screenScrollSpeed * (self.screenScrollUpLoc - mouseY) / self.screenScrollUpLoc
-	elseif mouseY > self.screenScrollDownLoc then
-		self.screenY = self.screenY + dt * self.screenScrollSpeed * (mouseY - self.screenScrollDownLoc) / (self.viewHeight - self.screenScrollDownLoc)
+	if self:onScreenPixel(mouseX+self.anchorX+self.screenX, mouseY+self.anchorY+self.screenY) then
+		if mouseX < self.screenScrollLeftLoc then
+			self.screenX = self.screenX - dt * self.screenScrollSpeed * (self.screenScrollLeftLoc - mouseX) / self.screenScrollLeftLoc
+		elseif mouseX > self.screenScrollRightLoc then
+			if DEBUG then print('mousex='..tostring(mouseX)..' rightLimit='..tostring(self.screenScrollRightLoc)..' rightLimitMax='..tostring(self.anchorX + self.width)) end
+			self.screenX = self.screenX + dt * self.screenScrollSpeed * (mouseX - self.screenScrollRightLoc) / (self.viewWidth - self.screenScrollRightLoc)
+		end
+		
+		if mouseY < self.screenScrollUpLoc then
+			self.screenY = self.screenY - dt * self.screenScrollSpeed * (self.screenScrollUpLoc - mouseY) / self.screenScrollUpLoc
+		elseif mouseY > self.screenScrollDownLoc then
+			self.screenY = self.screenY + dt * self.screenScrollSpeed * (mouseY - self.screenScrollDownLoc) / (self.viewHeight - self.screenScrollDownLoc)
+		end
 	end
 
 	if self.screenX < 0 then
@@ -49,10 +51,10 @@ function PlayField:initialize(width, height, viewWidth, viewHeight, anchorX, anc
 	self.screenY = 0
 	
 	self.screenScrollSpeed = 800
-	self.screenScrollLeftLoc = self.viewWidth*0.2
-	self.screenScrollRightLoc = self.viewWidth*0.8
-	self.screenScrollUpLoc = self.viewHeight*0.2
-	self.screenScrollDownLoc = self.viewHeight*0.8
+	self.screenScrollLeftLoc = self.viewWidth*0.2 + self.anchorX
+	self.screenScrollRightLoc = self.viewWidth*0.8 + self.anchorX
+	self.screenScrollUpLoc = self.viewHeight*0.2 + self.anchorY
+	self.screenScrollDownLoc = self.viewHeight*0.8 + self.anchorY
 	
 	self.tileGen = TileGenerator:new()
 	self.tileGen:generateNewGrassTile(100,100,math.random(300,500))
@@ -140,12 +142,12 @@ end
 
 function PlayField:onScreenPixel(x,y)
 
-	return x > self.screenX and x < self.screenX + self.viewWidth and y > self.screenY and y < self.screenY + self.viewHeight
+	return x >= self.screenX and x <= self.screenX + self.viewWidth and y >= self.screenY and y <= self.screenY + self.viewHeight
 
 end
 
 function PlayField:onScreenArea(x,y,width,height)
 
-	return x+width > self.screenX and x < self.screenX + self.viewWidth and y+height > self.screenY and y < self.screenY + self.viewHeight
+	return x+width >= self.screenX and x <= self.screenX + self.viewWidth and y+height >= self.screenY and y <= self.screenY + self.viewHeight
 
 end
