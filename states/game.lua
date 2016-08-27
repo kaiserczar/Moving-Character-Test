@@ -10,7 +10,7 @@ function game:enter()
 	love.mouse.setX(love.graphics.getWidth()/2)
 	love.mouse.setY(love.graphics.getHeight()/2)
 	
-	self.playingField = PlayField:new(4000,4000,1576,800,0,0)
+	self.playingField = PlayField:new(4000,4000)
 end
 
 function game:update(dt)
