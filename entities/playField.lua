@@ -98,6 +98,7 @@ function PlayField:draw()
 	if DEBUG then
 		love.graphics.print('Corner: ('..tostring(self.screenX)..','..tostring(self.screenY)..')',0,0)
 		love.graphics.print('Mouse:  ('..tostring(love.mouse.getX()+self.screenX)..','..tostring(love.mouse.getY()+self.screenY)..')',0,30)
+		love.graphics.print('Player: ('..tostring(game.mainCharacter.x)..','..tostring(game.mainCharacter.y)..')',0,60)
 	end
 end
 

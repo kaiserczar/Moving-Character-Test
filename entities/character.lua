@@ -52,7 +52,7 @@ local function _updateCharacterMovement(self,dt)
 	if self.x < self.width/2 then self.x = self.width/2 end
 	if self.x > game.playingField.width - self.width/2 then self.x = game.playingField.width - self.width/2 end
 	if self.y < self.height/2 then self.y = self.height/2 end
-	if self.y > game.playingField.height - self.height/2 then self.x = game.playingField.height - self.height/2 end
+	if self.y > game.playingField.height - self.height/2 then self.y = game.playingField.height - self.height/2 end
 
 end
 
