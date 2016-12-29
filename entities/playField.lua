@@ -65,11 +65,9 @@ end
 
 function PlayField:update(dt)
 
-	_scrollScreen(self,dt)
+	--_scrollScreen(self,dt)
 	
-	if love.keyboard.isDown('space') then
-		self:centerAt(game.mainCharacter.x+game.mainCharacter.width/2, game.mainCharacter.y+game.mainCharacter.height/2)
-	end
+	self:centerAt(game.mainCharacter.x+game.mainCharacter.width/2, game.mainCharacter.y+game.mainCharacter.height/2)
 	
 	if DEBUG then
 		self.debugTimer = self.debugTimer + dt

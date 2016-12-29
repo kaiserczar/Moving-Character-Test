@@ -5,12 +5,13 @@ game = {}
 
 function game:enter()
 	assetFolder = 'assets/img/'
-    self.mainCharacter = Character:new(assetFolder..'helmet.png',assetFolder..'rightArm.png',assetFolder..'leftArm.png',assetFolder..'sword.png',assetFolder..'shield.png',assetFolder..'legs1.png',assetFolder..'legs2.png',100,100,0,300,0.5)
+    self.mainCharacter = Character:new(assetFolder..'character/helmet.png',assetFolder..'character/rightArm.png',assetFolder..'character/leftArm.png',assetFolder..'character/sword.png',assetFolder..'character/shield.png',assetFolder..'character/legs1.png',assetFolder..'character/legs2.png',100,100,0,300,0.5)
 	
 	love.mouse.setX(love.graphics.getWidth()/2)
 	love.mouse.setY(love.graphics.getHeight()/2)
 	
 	self.playingField = PlayField:new(4000,4000)
+
 end
 
 function game:update(dt)
@@ -35,6 +36,10 @@ function game:keypressed(key, code)
 	
 	if key == 'lshift' then
 		self.mainCharacter.isSprinting = true
+	end
+	
+	if key == 'p' and DEBUG then
+		self.playingField.tileGen.grassTile:getData():encode('png','exportedGrass.png')
 	end
 end
 

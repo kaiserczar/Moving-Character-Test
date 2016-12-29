@@ -91,34 +91,15 @@ local function _updateLegAnimation(self,dt)
 		if self.currentLegAnimationTime > self.timePerLegAnimationFrame then
 		self.currentLegAnimationImg = self.currentLegAnimationImg + 1
 		if self.currentLegAnimationImg == 9 then self.currentLegAnimationImg = 1 end
-			-- if self.currentLegAnimationImg == 1 then -- Starting at both legs in
-				-- self.currentLegAnimationImg = 2
-				-- print('starting frame 2')
-			-- elseif self.currentLegAnimationImg == 2 then -- Half legs 1
-				-- self.currentLegAnimationImg = 3
-				-- print('starting frame 3')
-			-- elseif self.currentLegAnimationImg == 3 then -- Full legs 1
-				-- self.currentLegAnimationImg = 4
-				-- print('starting frame 4')
-			-- elseif self.currentLegAnimationImg == 4 then -- Half legs 1
-				-- self.currentLegAnimationImg = 4
-				-- print('starting frame 4')
-			-- elseif self.currentLegAnimationImg == 5 then -- legs 0
-				-- self.currentLegAnimationImg = 4
-				-- print('starting frame 4')
-			-- elseif self.currentLegAnimationImg == 6 then -- half legs 2
-				-- self.currentLegAnimationImg = 1
-				-- print('starting frame 1')
-			-- elseif self.currentLegAnimationImg == 7 then -- full legs 2
-				-- self.currentLegAnimationImg = 1
-				-- print('starting frame 1')
-			-- elseif self.currentLegAnimationImg == 8 then -- half legs 2
-				-- self.currentLegAnimationImg = 1
-				-- print('starting frame 1')
-			-- elseif self.currentLegAnimationImg == 9 then -- legs 0
-				-- self.currentLegAnimationImg = 1
-				-- print('starting frame 1')
-			-- end
+			-- self.currentLegAnimationImg == 1 then -- Starting at both legs in
+			-- self.currentLegAnimationImg == 2 then -- Half legs 1
+			-- self.currentLegAnimationImg == 3 then -- Full legs 1
+			-- self.currentLegAnimationImg == 4 then -- Half legs 1
+			-- self.currentLegAnimationImg == 5 then -- legs 0
+			-- self.currentLegAnimationImg == 6 then -- half legs 2
+			-- self.currentLegAnimationImg == 7 then -- full legs 2
+			-- self.currentLegAnimationImg == 8 then -- half legs 2
+			-- self.currentLegAnimationImg == 9 then -- legs 0
 			self.currentLegAnimationTime = 0
 		end
 		
